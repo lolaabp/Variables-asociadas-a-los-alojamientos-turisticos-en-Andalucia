@@ -1,0 +1,506 @@
+---
+title: "Series temporales"
+subtitle: Subtítulo
+date: "Fecha"
+output:
+  html_notebook: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+biblio-style: apsr
+institute: ""
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+<div style="text-align: justify">
+
+```{r}
+#LECTURA DE DATOS: VIAJEROS
+library(readxl)
+datos_apartamentos <- read_xlsx(path = "~/Desktop/TFG/apartamento_turistico.xlsx" , na= "-" )
+datos_apartamentos
+
+datos_hotel <- read_xlsx(path = "~/Desktop/TFG/alojamiento_hotelero.xlsx" , na= "-" )
+datos_hotel
+
+datos_rural <- read_xlsx(path = "~/Desktop/TFG/alojamiento_rural.xlsx" , na= "-" )
+datos_rural
+
+```
+
+```{r}
+## DATOS HOTELES
+datos_hot_Alm<-datos_hotel[datos_hotel$Provincia == 'Almería' & datos_hotel$Año<2024 ,]$`Estancia media`
+#datos_hot_Alm
+serie_hot_Alm<-ts(datos_hot_Alm,frequency=12,start=c(2014,1))
+#serie_hot_Alm
+
+datos_hot_Cad<-datos_hotel[datos_hotel$Provincia == 'Cádiz' & datos_hotel$Año<2024,]$`Estancia media`
+#datos_hot_Cad
+serie_hot_Cad<-ts(datos_hot_Cad,frequency=12,start=c(2014,1))
+#serie_hot_Cad
+
+datos_hot_Cor<-datos_hotel[datos_hotel$Provincia == 'Córdoba' & datos_hotel$Año<2024,]$`Estancia media`
+#datos_hot_Cor
+serie_hot_Cor<-ts(datos_hot_Cor,frequency=12,start=c(2014,1))
+#serie_hot_Cor
+
+datos_hot_Gr<-datos_hotel[datos_hotel$Provincia == 'Granada' & datos_hotel$Año<2024,]$`Estancia media`
+#datos_hot_Gr
+serie_hot_Gr<-ts(datos_hot_Gr,frequency=12,start=c(2014,1))
+#serie_hot_Gr
+
+datos_hot_Hu<-datos_hotel[datos_hotel$Provincia == 'Huelva' & datos_hotel$Año<2024,]$`Estancia media`
+#datos_hot_Hu
+serie_hot_Hu<-ts(datos_hot_Hu,frequency=12,start=c(2014,1))
+#serie_hot_Hu
+
+datos_hot_Ja<-datos_hotel[datos_hotel$Provincia == 'Jaén' & datos_hotel$Año<2024,]$`Estancia media`
+#datos_hot_Ja
+serie_hot_Ja<-ts(datos_hot_Ja,frequency=12,start=c(2014,1))
+#serie_hot_Ja
+
+datos_hot_Ma<-datos_hotel[datos_hotel$Provincia == 'Málaga' & datos_hotel$Año<2024,]$`Estancia media`
+#datos_hot_Ma
+serie_hot_Ma<-ts(datos_hot_Ma,frequency=12,start=c(2014,1))
+#serie_hot_Ma
+
+datos_hot_Sev<-datos_hotel[datos_hotel$Provincia == 'Sevilla' & datos_hotel$Año<2024,]$`Estancia media`
+#datos_hot_Sev
+serie_hot_Sev<-ts(datos_hot_Sev,frequency=12,start=c(2014,1))
+#serie_hot_Sev
+```
+
+```{r}
+## DATOS APARTAMENTOS 
+datos_apart_Alm<-datos_apartamentos[datos_apartamentos$Provincia == 'Almería' & datos_apartamentos$Año<2024,]$`Estancia media`
+#datos_apart_Alm
+serie_apart_Alm<-ts(datos_apart_Alm,frequency=12,start=c(2014,1))
+#serie_apart_Alm
+
+datos_apart_Cad<-datos_apartamentos[datos_apartamentos$Provincia == 'Cádiz' & datos_apartamentos$Año<2024,]$`Estancia media`
+#datos_apart_Cad
+serie_apart_Cad<-ts(datos_apart_Cad,frequency=12,start=c(2014,1))
+#serie_apart_Cad
+
+datos_apart_Cor<-datos_apartamentos[datos_apartamentos$Provincia == 'Córdoba' & datos_apartamentos$Año<2024,]$`Estancia media`
+#datos_apart_Cor
+serie_apart_Cor<-ts(datos_apart_Cor,frequency=12,start=c(2014,1))
+#serie_apart_Cor
+
+datos_apart_Gr<-datos_apartamentos[datos_apartamentos$Provincia == 'Granada' & datos_apartamentos$Año<2024,]$`Estancia media`
+#datos_apart_Gr
+serie_apart_Gr<-ts(datos_apart_Gr,frequency=12,start=c(2014,1))
+#serie_apart_Gr
+
+datos_apart_Hu<-datos_apartamentos[datos_apartamentos$Provincia == 'Huelva' & datos_apartamentos$Año<2024,]$`Estancia media`
+#datos_apart_Hu
+serie_apart_Hu<-ts(datos_apart_Hu,frequency=12,start=c(2014,1))
+#serie_apart_Hu
+
+datos_apart_Ja<-datos_apartamentos[datos_apartamentos$Provincia == 'Jaén' & datos_apartamentos$Año<2024,]$`Estancia media`
+#datos_apart_Ja
+serie_apart_Ja<-ts(datos_apart_Ja,frequency=12,start=c(2014,1))
+#serie_apart_Ja
+
+datos_apart_Ma<-datos_apartamentos[datos_apartamentos$Provincia == 'Málaga' & datos_apartamentos$Año<2024,]$`Estancia media`
+#datos_apart_Ma
+serie_apart_Ma<-ts(datos_apart_Ma,frequency=12,start=c(2014,1))
+#serie_apart_Ma
+
+datos_apart_Sev<-datos_apartamentos[datos_apartamentos$Provincia == 'Sevilla' & datos_apartamentos$Año<2024,]$`Estancia media`
+#datos_apart_Sev
+serie_apart_Sev<-ts(datos_apart_Sev,frequency=12,start=c(2014,1))
+#serie_apart_Sev
+```
+
+```{r}
+## DATOS ALOJAMIENTOS RURALES
+datos_rur_Alm<-datos_rural[datos_rural$Provincia == 'Almería' & datos_rural$Año<2024 ,]$`Estancia media`
+#datos_rur_Alm
+serie_rur_Alm<-ts(datos_rur_Alm,frequency=12,start=c(2014,1))
+#serie_rur_Alm
+
+datos_rur_Cad<-datos_rural[datos_rural$Provincia == 'Cádiz' & datos_rural$Año<2024,]$`Estancia media`
+#datos_rur_Cad
+serie_rur_Cad<-ts(datos_rur_Cad,frequency=12,start=c(2014,1))
+#serie_rur_Cad
+
+datos_rur_Cor<-datos_rural[datos_rural$Provincia == 'Córdoba' & datos_rural$Año<2024,]$`Estancia media`
+#datos_rur_Cor
+serie_rur_Cor<-ts(datos_rur_Cor,frequency=12,start=c(2014,1))
+#serie_rur_Cor
+
+datos_rur_Gr<-datos_rural[datos_rural$Provincia == 'Granada' & datos_rural$Año<2024,]$`Estancia media`
+#datos_rur_Gr
+serie_rur_Gr<-ts(datos_rur_Gr,frequency=12,start=c(2014,1))
+#serie_rur_Gr
+
+datos_rur_Hu<-datos_rural[datos_rural$Provincia == 'Huelva' & datos_rural$Año<2024,]$`Estancia media`
+#datos_rur_Hu
+serie_rur_Hu<-ts(datos_rur_Hu,frequency=12,start=c(2014,1))
+#serie_rur_Hu
+
+datos_rur_Ja<-datos_rural[datos_rural$Provincia == 'Jaén' & datos_rural$Año<2024,]$`Estancia media`
+#datos_rur_Ja
+serie_rur_Ja<-ts(datos_rur_Ja,frequency=12,start=c(2014,1))
+#serie_rur_Ja
+
+datos_rur_Ma<-datos_rural[datos_rural$Provincia == 'Málaga' & datos_rural$Año<2024,]$`Estancia media`
+#datos_rur_Ma
+serie_rur_Ma<-ts(datos_rur_Ma,frequency=12,start=c(2014,1))
+#serie_rur_Ma
+
+datos_rur_Sev<-datos_rural[datos_rural$Provincia == 'Sevilla' & datos_rural$Año<2024,]$`Estancia media`
+#datos_rur_Sev
+serie_rur_Sev<-ts(datos_rur_Sev,frequency=12,start=c(2014,1))
+#serie_rur_Sev
+```
+
+```{r} 
+#CALCULAR DESCOMPOSICIÓN CON EL RESTO DE PROVINCIAS
+
+#CÁDIZ
+#componentes de cada serie:
+comp_serie_hot_Cad<-decompose(serie_hot_Cad)
+comp_serie_apart_Cad<-decompose(serie_apart_Cad)
+#En los alojamientos rurales hay NA:
+library(imputeTS)
+#ggplot_na_distribution(serie_rur_Cad)
+comp_serie_rur_Cad<-decompose(na_interpolation(serie_rur_Cad))
+comp_serie_rur_Cad$trend
+comp_serie_apart_Cad$trend
+comp_serie_hot_Cad$trend
+
+#SEVILLA
+#componentes de cada serie:
+comp_serie_hot_Sev<-decompose(serie_hot_Sev)
+comp_serie_apart_Sev<-decompose(serie_apart_Sev)
+#En los alojamientos rurales hay NA:
+library(imputeTS)
+#ggplot_na_distribution(serie_rur_Cad)
+#comp_serie_rur_Sev<-decompose(na_interpolation(serie_rur_Sev))
+comp_serie_rur_Sev<-decompose(na_interpolation(serie_rur_Sev))
+comp_serie_rur_Sev$trend
+comp_serie_apart_Sev$trend
+comp_serie_hot_Sev$trend
+
+#CÓRDOBA
+#componentes de cada serie:
+comp_serie_hot_Cor<-decompose(serie_hot_Cor)
+comp_serie_apart_Cor<-decompose(serie_apart_Cor)
+#En los alojamientos rurales hay NA:
+library(imputeTS)
+#ggplot_na_distribution(serie_rur_Cad)
+#comp_serie_rur_Sev<-decompose(na_interpolation(serie_rur_Sev))
+comp_serie_rur_Cor<-decompose(na_interpolation(serie_rur_Cor))
+comp_serie_rur_Cor$trend
+comp_serie_apart_Cor$trend
+comp_serie_hot_Cor$trend
+
+#JAEN
+#componentes de cada serie:
+comp_serie_hot_Ja<-decompose(serie_hot_Ja)
+comp_serie_apart_Ja<-decompose(serie_apart_Ja)
+#En los alojamientos rurales hay NA:
+library(imputeTS)
+#ggplot_na_distribution(serie_rur_Cad)
+#comp_serie_rur_Sev<-decompose(na_interpolation(serie_rur_Sev))
+comp_serie_rur_Ja<-decompose(na_interpolation(serie_rur_Ja))
+comp_serie_rur_Ja$trend
+comp_serie_apart_Ja$trend
+comp_serie_hot_Ja$trend
+
+#GRANADA
+#Como solucionar el error:
+serie_hot_Gr <-na_interpolation(serie_hot_Gr)
+serie_apart_Gr<- na_interpolation(serie_apart_Gr)
+serie_rur_Gr <- na_interpolation(serie_rur_Gr)
+#componentes de cada serie:
+comp_serie_hot_Gr<-decompose(serie_hot_Gr)
+comp_serie_apart_Gr<-decompose(serie_apart_Gr)
+#En los alojamientos rurales hay NA:
+library(imputeTS)
+#ggplot_na_distribution(serie_rur_Cad)
+#comp_serie_rur_Sev<-decompose(na_interpolation(serie_rur_Sev))
+comp_serie_rur_Gr<-decompose(na_interpolation(serie_rur_Gr))
+comp_serie_rur_Gr$trend
+comp_serie_apart_Gr$trend
+comp_serie_hot_Gr$trend
+
+#ALMERÍA
+#componentes de cada serie:
+comp_serie_hot_Alm<-decompose(serie_hot_Alm)
+comp_serie_apart_Alm<-decompose(serie_apart_Alm)
+#En los alojamientos rurales hay NA:
+library(imputeTS)
+#ggplot_na_distribution(serie_rur_Cad)
+#comp_serie_rur_Sev<-decompose(na_interpolation(serie_rur_Sev))
+comp_serie_rur_Alm<-decompose(na_interpolation(serie_rur_Alm))
+comp_serie_rur_Alm$trend
+comp_serie_apart_Alm$trend
+comp_serie_hot_Alm$trend
+
+#HUELVA 
+#Como solucionar el error:
+serie_hot_Hu <-na_interpolation(serie_hot_Hu)
+serie_apart_Hu<- na_interpolation(serie_apart_Hu)
+serie_rur_Hu <- na_interpolation(serie_rur_Hu)
+#componentes de cada serie:
+comp_serie_hot_Hu<-decompose(serie_hot_Hu)
+comp_serie_apart_Hu<-decompose(serie_apart_Hu)
+#En los alojamientos rurales hay NA:
+library(imputeTS)
+#ggplot_na_distribution(serie_rur_Cad)
+#comp_serie_rur_Sev<-decompose(na_interpolation(serie_rur_Sev))
+comp_serie_rur_Hu<-decompose(na_interpolation(serie_rur_Hu))
+comp_serie_rur_Hu$trend
+comp_serie_apart_Hu$trend
+comp_serie_hot_Hu$trend
+
+#MÁLAGA
+#Como solucionar el error:
+serie_hot_Ma <-na_interpolation(serie_hot_Ma)
+serie_apart_Ma<- na_interpolation(serie_apart_Ma)
+serie_rur_Ma <- na_interpolation(serie_rur_Ma)
+#componentes de cada serie:
+comp_serie_hot_Ma<-decompose(serie_hot_Ma)
+comp_serie_apart_Ma<-decompose(serie_apart_Ma)
+#En los alojamientos rurales hay NA:
+library(imputeTS)
+#ggplot_na_distribution(serie_rur_Cad)
+#comp_serie_rur_Sev<-decompose(na_interpolation(serie_rur_Sev))
+comp_serie_rur_Ma<-decompose(na_interpolation(serie_rur_Ma))
+comp_serie_rur_Ma$trend
+comp_serie_apart_Ma$trend
+comp_serie_hot_Ma$trend
+```
+
+```{r}
+#GRÁFICA CON TODAS LAS TENDENCIAS
+
+#HOTELES
+
+#Definir colores para cada provincia
+colores <- c("red", "blue", "green", "purple", "orange", "brown", "pink", "cyan4")
+
+#library(RColorBrewer)
+#colores<-brewer.pal(8,"Set1")
+
+#Gráfica con todas las tendencias
+plot(comp_serie_hot_Cad$trend, col=colores[1],ylim=c(0,9),ylab="Estancia media",xlab="Figura 1")
+lines(comp_serie_hot_Sev$trend, col=colores[2],ylab="")
+lines(comp_serie_hot_Cor$trend, col=colores[4],ylab="")
+lines(comp_serie_hot_Gr$trend, col=colores[5],ylab="")
+lines(comp_serie_hot_Ja$trend, col=colores[3],yylab="")
+lines(comp_serie_hot_Alm$trend, col=colores[6],ylab="")
+lines(comp_serie_hot_Hu$trend, col=colores[7],ylab="")
+lines(comp_serie_apart_Ma$trend, col=colores[8],ylim=c(0,10),ylab="")
+legend("top", legend = c("Cádiz", "Sevilla", "Córdoba","Granada", "Jaén", "Almería", "Huelva","Málaga"),
+       col = c(colores[1],colores[2],colores[4],colores[5], colores[3],colores[6],colores[7],colores[8]), lty = 1,ncol=4)
+
+#Dividir el espacio en 3 filas
+par(mfrow = c(3, 1))
+
+plot.new()
+legend("center", legend = c("Cádiz", "Sevilla", "Jaén"),
+       col = colores[1:3], lty = 1,ncol=3)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+plot.new()
+legend("center", legend = c("Córdoba", "Granada", "Almería"),
+       col = colores[4:6], lty = 1,ncol=3)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+plot.new()
+legend("center", legend = c("Huelva", "Málaga"),
+       col = colores[7:8], lty = 1,ncol=2)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+# Restablecer la configuración de la pantalla de gráficos
+par(mfrow = c(1, 1))
+
+#APARTAMENTOS TURÍSTICOS
+
+#Definir colores para cada provincia
+colores <- c("red", "blue", "green", "purple", "orange", "brown", "pink", "cyan4")
+
+#library(RColorBrewer)
+#colores<-brewer.pal(8,"Set1")
+
+#Gráfica con todas las tendencias
+plot(comp_serie_apart_Cad$trend, col=colores[1],ylim=c(0,9),ylab="Estancia media",xlab="Figura 2")
+lines(comp_serie_apart_Sev$trend, col=colores[2],ylab="")
+lines(comp_serie_apart_Cor$trend, col=colores[4],ylab="")
+lines(comp_serie_apart_Gr$trend, col=colores[5],ylab="")
+lines(comp_serie_apart_Ja$trend, col=colores[3],yylab="")
+lines(comp_serie_apart_Alm$trend, col=colores[6],ylab="")
+lines(comp_serie_apart_Hu$trend, col=colores[7],ylab="")
+lines(comp_serie_apart_Ma$trend, col=colores[8],ylim=c(0,10),ylab="")
+legend("top", legend = c("Cádiz", "Sevilla", "Córdoba","Granada", "Jaén", "Almería", "Huelva","Málaga"),
+       col = c(colores[1],colores[2],colores[4],colores[5], colores[3],colores[6],colores[7],colores[8]), lty = 1,ncol=4)
+
+
+
+#Dividir el espacio en 3 filas
+par(mfrow = c(3, 1))
+
+plot.new()
+legend("center", legend = c("Cádiz", "Sevilla", "Jaén"),
+       col = colores[1:3], lty = 1,ncol=3)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+plot.new()
+legend("center", legend = c("Córdoba", "Granada", "Almería"),
+       col = colores[4:6], lty = 1,ncol=3)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+plot.new()
+legend("center", legend = c("Huelva", "Málaga"),
+       col = colores[7:8], lty = 1,ncol=2)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+# Restablecer la configuración de la pantalla de gráficos
+par(mfrow = c(1, 1))
+
+#ALOJAMIENTO RURAL
+#Definir colores para cada provincia
+colores <- c("red", "blue", "green", "purple", "orange", "brown", "pink", "cyan4")
+
+#library(RColorBrewer)
+#colores<-brewer.pal(8,"Set1")
+
+#Gráfica con todas las tendencias
+plot(comp_serie_rur_Cad$trend, col=colores[1],ylim=c(0,9),ylab="Estancia media",xlab="Figura 3")
+lines(comp_serie_rur_Sev$trend, col=colores[2],ylab="")
+lines(comp_serie_rur_Cor$trend, col=colores[4],ylab="")
+lines(comp_serie_rur_Gr$trend, col=colores[5],ylab="")
+lines(comp_serie_rur_Ja$trend, col=colores[3],yylab="")
+lines(comp_serie_rur_Alm$trend, col=colores[6],ylab="")
+lines(comp_serie_rur_Hu$trend, col=colores[7],ylab="")
+lines(comp_serie_rur_Ma$trend, col=colores[8],ylim=c(0,10),ylab="")
+legend("top", legend = c("Cádiz", "Sevilla", "Córdoba","Granada", "Jaén", "Almería", "Huelva","Málaga"),
+       col = c(colores[1],colores[2],colores[4],colores[5], colores[3],colores[6],colores[7],colores[8]), lty = 1,ncol=4)
+
+
+#Dividir el espacio en 3 filas
+par(mfrow = c(3, 1))
+
+plot.new()
+legend("center", legend = c("Cádiz", "Sevilla", "Jaén"),
+       col = colores[1:3], lty = 1,ncol=3)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+plot.new()
+legend("center", legend = c("Córdoba", "Granada", "Almería"),
+       col = colores[4:6], lty = 1,ncol=3)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+plot.new()
+legend("center", legend = c("Huelva", "Málaga"),
+       col = colores[7:8], lty = 1,ncol=2)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+# Restablecer la configuración de la pantalla de gráficos
+par(mfrow = c(1, 1))
+```
+
+```{r}
+#Para dibujar la estacionalidad-------------------------------------------------
+
+#HOTELES
+
+plot(comp_serie_hot_Ja$seasonal[1:12],type='b',col=colores[3],ylim=c(-1,2),ylab="Estancia media",xlab="Figura 4.3")
+lines(comp_serie_hot_Sev$seasonal[1:12],type='b',col=colores[2])
+abline(h=0,col="black")
+lines(comp_serie_hot_Cor$seasonal[1:12],type='b',col=colores[4])
+abline(h=0,col="black")
+lines(comp_serie_hot_Gr$seasonal[1:12],type='b',col=colores[5])
+abline(h=0,col="black")
+legend("top", legend = c("Jaén", "Sevilla", "Córdoba","Granada"),
+       col = c(colores[3],colores[2],colores[4],colores[5]), lty = 1,ncol=4)
+
+plot(comp_serie_hot_Cad$seasonal[1:12],type='b',col=colores[1],ylim=c(-2,2),ylab="Estancia media",xlab="Figura 4.2")
+abline(h=0,col="black")
+lines(comp_serie_hot_Alm$seasonal[1:12],type='b',col=colores[6])
+abline(h=0,col="black")
+lines(comp_serie_hot_Hu$seasonal[1:12],type='b',col=colores[7])
+abline(h=0,col="black")
+legend("top", legend = c("Cádiz", "Almería", "Huelva"),
+       col = c(colores[1],colores[6],colores[7]), lty = 1,ncol=4)
+
+plot(comp_serie_hot_Ma$seasonal[1:12],type='b',col=colores[8],ylim=c(-1,2),ylab="Estancia media",xlab="Figura 4.1")
+abline(h=0,col="black")
+legend("top", legend = c("Málaga"),
+       col = c(colores[8]), lty = 1,ncol=4)
+
+plot.new()
+legend("center", legend = c("Cádiz", "Sevilla", "Jaén", "Córdoba", "Granada", "Almería", "Huelva", "Málaga"),
+       col = colores, lty = 1,ncol=3)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+#APARTAMENTOS TURÍSTICOS
+
+plot(comp_serie_apart_Ja$seasonal[1:12],type='b',col=colores[3],ylim=c(-1,3),ylab="Estancia media",xlab="Figura 5.3")
+lines(comp_serie_apart_Sev$seasonal[1:12],type='b',col=colores[2])
+abline(h=0,col="black")
+lines(comp_serie_apart_Cor$seasonal[1:12],type='b',col=colores[4])
+abline(h=0,col="black")
+lines(comp_serie_apart_Gr$seasonal[1:12],type='b',col=colores[5])
+abline(h=0,col="black")
+legend("top", legend = c("Jaén", "Sevilla", "Córdoba","Granada"),
+       col = c(colores[3],colores[2],colores[4],colores[5]), lty = 1,ncol=4)
+
+plot(comp_serie_apart_Cad$seasonal[1:12],type='b',col=colores[1],ylim=c(-3,5),ylab="Estancia media",xlab="Figura 5.2")
+abline(h=0,col="black")
+lines(comp_serie_apart_Alm$seasonal[1:12],type='b',col=colores[6])
+abline(h=0,col="black")
+lines(comp_serie_apart_Hu$seasonal[1:12],type='b',col=colores[7])
+abline(h=0,col="black")
+legend("top", legend = c("Cádiz", "Almería", "Huelva"),
+       col = c(colores[1],colores[6],colores[7]), lty = 1,ncol=4)
+
+plot(comp_serie_apart_Ma$seasonal[1:12],type='b',col=colores[8],ylim=c(-1,2),ylab="Estancia media",xlab="Figura 5.1")
+abline(h=0,col="black")
+legend("top", legend = c("Málaga"),
+       col = c(colores[8]), lty = 1,ncol=4)
+
+plot.new()
+legend("center", legend = c("Cádiz", "Sevilla", "Jaén", "Córdoba", "Granada", "Almería", "Huelva", "Málaga"),
+       col = colores, lty = 1,ncol=3)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+
+#ALOJAMIENTO RURAL
+
+plot(comp_serie_rur_Ja$seasonal[1:12],type='b',col=colores[3],ylim=c(-1,4),ylab="Estancia media",xlab="Figura 6.3")
+lines(comp_serie_rur_Sev$seasonal[1:12],type='b',col=colores[2])
+abline(h=0,col="black")
+lines(comp_serie_rur_Cor$seasonal[1:12],type='b',col=colores[4])
+abline(h=0,col="black")
+lines(comp_serie_rur_Gr$seasonal[1:12],type='b',col=colores[5])
+abline(h=0,col="black")
+legend("top", legend = c("Jaén", "Sevilla", "Córdoba","Granada"),
+       col = c(colores[3],colores[2],colores[4],colores[5]), lty = 1,ncol=4)
+
+plot(comp_serie_rur_Cad$seasonal[1:12],type='b',col=colores[1],ylim=c(-1,2),ylab="Estancia media",xlab="Figura 6.2")
+abline(h=0,col="black")
+lines(comp_serie_rur_Alm$seasonal[1:12],type='b',col=colores[6])
+abline(h=0,col="black")
+lines(comp_serie_rur_Hu$seasonal[1:12],type='b',col=colores[7])
+abline(h=0,col="black")
+legend("top", legend = c("Cádiz", "Almería", "Huelva"),
+       col = c(colores[1],colores[6],colores[7]), lty = 1,ncol=4)
+
+plot(comp_serie_rur_Ma$seasonal[1:12],type='b',col=colores[8],ylim=c(-2,4),ylab="Estancia media",xlab="Figura 6.1")
+abline(h=0,col="black")
+legend("top", legend = c("Málaga"),
+       col = c(colores[8]), lty = 1,ncol=4)
+
+plot.new()
+legend("center", legend = c("Cádiz", "Sevilla", "Jaén", "Córdoba", "Granada", "Almería", "Huelva", "Málaga"),
+       col = colores, lty = 1,ncol=3)
+mtext("Tendencia de distintas provincias (hoteles)", outer = TRUE, cex =1.2)
+```
